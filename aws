@@ -1,0 +1,13 @@
+#!/bin/bash
+echo "Enabling the jenkins repository"
+wget -O /etc/yum.repos.d/jenkins.repo     https://pkg.jenkins.io/redhat-stable/jenkins.repo
+rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+echo "Installing the Java-17 package"
+dnf install java-17-amazon-corretto -y
+echo "Installing the Jenkins package"
+yum install jenkins
+echo "reloading the daemon and starting/enanbling the jenkins"
+systemctl daemon-reload
+systemctl enable jenkins --now
+echo "Printing the Jenkins Password"
+cat /var/lib/jenkins/secrets/initialAdminPassword
